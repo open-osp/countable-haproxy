@@ -1,0 +1,49 @@
+
+global
+    log         127.0.0.1 local0
+    maxconn     60000
+    daemon
+
+
+defaults
+    log                     global
+    option                  dontlognull
+    option                  redispatch
+    retries                 3
+    timeout connect         4s
+    timeout client          60s
+    timeout server          60s
+
+
+listen stats # Define a listen section called "stats"
+    bind :9000 # Listen on localhost:9000
+    mode http
+    stats enable  # Enable stats page
+    stats hide-version  # Hide HAProxy version
+    stats realm Haproxy\ Statistics  # Title text for popup window
+    stats uri /  # Stats URI
+    stats auth admin:password  # Authentication credentials
+
+frontend http_proxy
+    mode http
+    bind *:80
+    bind *:443 ssl crt /openosp.pem
+    option httplog
+    option http-server-close
+    maxconn 60000
+
+    redirect scheme https code 301 if !{ ssl_fc }
+
+    use_backend test if { hdr_beg(host) monk.openosp.ca }
+    use_backend test2
+
+backend test
+    mode http
+    http-request set-header X-Forwarded-Port %[dst_port]
+    http-request add-header X-Forwarded-Proto https if { ssl_fc }
+    server site example.com:8003 check ssl verify none
+
+backend test2
+    mode http
+    server site example.com:8000
+

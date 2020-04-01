@@ -1,0 +1,22 @@
+
+
+version: '3.3'
+
+services:
+  
+  proxy:
+    restart: always
+    image: haproxy:1.7
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+
+    ports:
+      - 80:80
+      - 443:443
+      - 9000:9000
+
+  proxy-checker:
+    image: haproxy:1.7
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+
