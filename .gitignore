@@ -2,3 +2,4 @@ haproxy.cfg
 docker-compose.override.yml
 
 *.pem
+*.pem*
