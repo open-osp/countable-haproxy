@@ -6,7 +6,7 @@ services:
   
   proxy:
     restart: always
-    image: haproxy:1.7
+    image: haproxy:2.2
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
 
@@ -16,7 +16,7 @@ services:
       - 9000:9000
 
   proxy-checker:
-    image: haproxy:1.7
+    image: haproxy:2.2
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
 
