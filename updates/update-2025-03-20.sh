@@ -1,9 +1,9 @@
 #!/bin/bash
 # Path to the HAProxy configuration file
-HAPROXY_CFG="haproxy.cfg"
+HAPROXY_CFG="./../haproxy.cfg"
 
 # Backup the existing haproxy.cfg
-BACKUP_CFG="haproxy.cfg.bak"
+BACKUP_CFG="./../haproxy.cfg.bak"
 echo "Backing up current HAProxy config to $BACKUP_CFG"
 cp $HAPROXY_CFG $BACKUP_CFG
 
@@ -20,4 +20,4 @@ echo "Added PUT request blocking configuration."
 # Restart HAProxy to apply the changes
 echo "Restarting HAProxy service to apply the changes..."
 
-sudo -u jenkins -H sh -c "$(dirname "$0")/reload.sh"
+sudo -u jenkins -H sh -c "./../reload.sh"
