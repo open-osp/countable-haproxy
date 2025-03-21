@@ -10,6 +10,6 @@ then
       echo "Config check failed. Printing error information here:"
       docker compose run proxy-checker -c -f /usr/local/etc/haproxy/haproxy.cfg
 else
-      docker kill -s HUP haproxy-proxy-1
+      docker compose kill -s HUP proxy
 fi
 
